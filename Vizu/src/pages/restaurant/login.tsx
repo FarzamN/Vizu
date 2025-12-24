@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { adminLoginAPI } from "@/apis/auth.api";
+import {  restaurantLoginAPI } from "@/apis/auth.api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -15,8 +15,8 @@ export default function Login() {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      await adminLoginAPI({ phone, password });
-      navigate("/admin/dashboard");
+      await restaurantLoginAPI({ phone, password });
+      navigate("/restaurant/dashboard");
     } catch (err: any) {
       setError(err.message || "Login failed");
     } finally {
@@ -27,7 +27,7 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="w-[360px] space-y-4">
-        <Label className="text-xl font-semibold">Admin Login</Label>
+        <Label className="text-xl font-semibold">Restaurant Login</Label>
 
         <Input
           value={phone}

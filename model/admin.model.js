@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const userSchema = new Schema(
+const adminSchema = new Schema(
   {
     name: String,
     phone: {
@@ -17,16 +17,8 @@ const userSchema = new Schema(
       enum: ["ADMIN", "RESTAURANT"],
       required: true,
     },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
-    subscriptionStatus: {
-      type: String,
-      default: "inactive",
-    },
   },
   { timestamps: true }
 );
 
-export default model("User", userSchema);
+export default model("admin", adminSchema);
