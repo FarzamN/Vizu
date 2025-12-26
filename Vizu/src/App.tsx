@@ -20,6 +20,7 @@ import AdminRestaurants from "./pages/admin/restaurants";
 // Restaurant Pages
 import RestaurantLogin from "./pages/restaurant/login";
 import RestaurantDashboard from "./pages/restaurant/dashboard";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Routes>
 
         {/* 🌍 Public */}
+        <Route path="/" element={<HomePage />} />
         <Route path="/user" element={<UserModelPage />} />
 
         {/* 👑 Admin Auth */}
