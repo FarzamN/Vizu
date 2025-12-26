@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import GltfModel from "@/components/common/GLTFModel";
+// import GltfModel from "@/components/common/GLTFModel";
 import AutoFitModel from "@/components/AutoFitModel";
 
 const UserModelPage = () => {
