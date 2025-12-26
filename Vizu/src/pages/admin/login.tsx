@@ -55,7 +55,7 @@ export default function Login() {
         </div>
         <Validation  visible={error !== ""} text={error}/>
 
-        <Button 
+        <Button
         onClick={handleSubmit}
         disabled={loading}
         className="w-full  bg-white text-black hover:bg-white/90 transition"
@@ -64,7 +64,7 @@ export default function Login() {
 
         {/* Footer */}
         <p className="mt-6 text-center text-sm text-white/80">
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <span className="cursor-pointer underline hover:text-white">
             Register
           </span>
