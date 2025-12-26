@@ -37,10 +37,13 @@ const gltfUrl ="https://res.cloudinary.com/dyyfyyb8u/image/upload/v1766747116/ma
   return (
     <div className="flex items-center justify-center w-full h-screen">
       <div className="border rounded-lg  text-center w-full h-full">
-        <h1 className="text-2xl font-semibold mb-2">Welcome</h1>
 
         {code ? (
                 <div className="h-screen flex flex-col">
+                {/* AR Button */}
+                <div className="p-4 flex justify-center">
+                  <ARButton glbUrl={gltfUrl} />
+                </div>
                 {/* 3D Preview */}
                 <div className="flex-1">
                   <Canvas camera={{ fov: 45 }}>
@@ -51,10 +54,6 @@ const gltfUrl ="https://res.cloudinary.com/dyyfyyb8u/image/upload/v1766747116/ma
                   </Canvas>
                 </div>
           
-                {/* AR Button */}
-                <div className="p-4 flex justify-center">
-                  <ARButton glbUrl={gltfUrl} />
-                </div>
               </div>
         ) : (
           <p className="text-red-500">Invalid or missing QR code</p>
