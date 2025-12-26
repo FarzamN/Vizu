@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 // import GltfModel from "@/components/common/GLTFModel";
-// import AutoFitModel from "@/components/AutoFitModel";
-import AutoScaleModel from "@/components/AutoScaleModel";
+import AutoFitModel from "@/components/AutoFitModel";
+import ARButton from "@/components/ARButton";
 
 const UserModelPage = () => {
   const [searchParams] = useSearchParams();
@@ -33,28 +33,29 @@ const gltfUrl ="https://res.cloudinary.com/dyyfyyb8u/image/upload/v1766747116/ma
   //   <OrbitControls />
   // </Canvas>
  
-  //    <div className="w-full h-screen">
-    //    <Canvas camera={{ fov: 45 }}>
-    //      <ambientLight intensity={0.6} />
-    //      <directionalLight position={[5, 5, 5]} intensity={1} />
-    //      <AutoFitModel url={gltfUrl} />
-    //      <OrbitControls enableDamping />
-    //    </Canvas>
-    //  </div>
+
   return (
     <div className="flex items-center justify-center w-full h-screen">
       <div className="border rounded-lg  text-center w-full h-full">
         <h1 className="text-2xl font-semibold mb-2">Welcome</h1>
 
         {code ? (
-           <div className="w-full h-screen">
-           <Canvas camera={{ position: [0, 0, 4], fov: 45 }}>
-             <ambientLight intensity={0.7} />
-             <directionalLight position={[5, 5, 5]} intensity={1} />
-             <AutoScaleModel url={gltfUrl} />
-             <OrbitControls enableDamping />
-           </Canvas>
-         </div>
+                <div className="h-screen flex flex-col">
+                {/* 3D Preview */}
+                <div className="flex-1">
+                  <Canvas camera={{ fov: 45 }}>
+                    <ambientLight intensity={0.6} />
+                    <directionalLight position={[5, 5, 5]} />
+                    <AutoFitModel url={gltfUrl} />
+                    <OrbitControls />
+                  </Canvas>
+                </div>
+          
+                {/* AR Button */}
+                <div className="p-4 flex justify-center">
+                  <ARButton glbUrl={gltfUrl} />
+                </div>
+              </div>
         ) : (
           <p className="text-red-500">Invalid or missing QR code</p>
         )}
