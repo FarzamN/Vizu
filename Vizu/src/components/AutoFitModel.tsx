@@ -2,13 +2,12 @@ import { useGLTF } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import { Box3, Vector3, Group } from "three";
 import { useEffect, useRef } from "react";
+import type { UrlProps } from "@/lib/type";
 
-type Props = {
-  url: string;
-};
 
-export default function AutoFitModel({ url }: Props) {
-  const { scene } = useGLTF(url);
+
+export default function AutoFitModel({ glbUrl,usdzUrl }: UrlProps) {
+  const { scene } = useGLTF(glbUrl);
   const group = useRef<Group>(null!);
   const { camera } = useThree();
 

@@ -3,3 +3,9 @@ export type ValidationPrpos= {
         text: string,
         variant? : "error" | "success" | "info"
 }
+
+export type UrlProps = {
+    glbUrl: string;
+    usdzUrl?: string;
+  };
+  

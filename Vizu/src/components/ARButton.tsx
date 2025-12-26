@@ -1,31 +1,11 @@
-type Props = {
-    glbUrl: string;
-    usdzUrl?: string;
-  };
-  
-  export default function ARButton({ glbUrl, usdzUrl }: Props) {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const isAndroid = /Android/.test(navigator.userAgent);
-  
-    const launchAR = () => {
-      if (isAndroid) {
-        const sceneViewerUrl = `https://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(
-          glbUrl
-        )}&mode=ar_preferred`;
-  
-        window.location.href = sceneViewerUrl;
-      } 
-      else if (isIOS && usdzUrl) {
-        window.location.href = usdzUrl;
-      } 
-      else {
-        alert("AR not supported on this device");
-      }
-    };
+import { launchAR } from "@/lib/function";
+import type { UrlProps } from "@/lib/type";
+
+  export default function ARButton({ glbUrl, usdzUrl }: UrlProps) {
   
     return (
       <button
-        onClick={launchAR}
+        onClick={() => launchAR(glbUrl, usdzUrl)}
         className="px-6 py-3 rounded-xl bg-black text-white text-lg font-semibold"
       >
         View in AR

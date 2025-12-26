@@ -23,38 +23,36 @@ const UserModelPage = () => {
     // NEXT STEP (later)
     // call API using this code
     // fetchUserByQr(code)
-
   }, [code]);
-const gltfUrl ="https://res.cloudinary.com/dyyfyyb8u/image/upload/v1766747116/make_me_a_fruit_bowl_yduqvp.glb"
+  const gltfUrl =
+    "https://res.cloudinary.com/dyyfyyb8u/image/upload/v1766747116/make_me_a_fruit_bowl_yduqvp.glb";
   //   <Canvas>
   //   <ambientLight intensity={0.8} />
   //   <directionalLight position={[5, 5, 5]} />
   //   <GltfModel url={gltfUrl} />
   //   <OrbitControls />
   // </Canvas>
- 
 
   return (
     <div className="flex items-center justify-center w-full h-screen">
       <div className="border rounded-lg  text-center w-full h-full">
-
         {code ? (
-                <div className="h-screen flex flex-col">
-                {/* AR Button */}
-                <div className="p-4 flex justify-center">
-                  <ARButton glbUrl={gltfUrl} />
-                </div>
-                {/* 3D Preview */}
-                <div className="flex-1">
-                  <Canvas camera={{ fov: 45 }}>
+          <div className="h-screen flex flex-col">
+            {/* AR Button */}
+            <div className="p-4 flex justify-center">
+              <ARButton glbUrl={gltfUrl} usdzUrl=""/>
+            </div>
+            {/* 3D Preview */}
+            <div className="flex-1">
+              
+              <Canvas camera={{ fov: 45 }}>
                     <ambientLight intensity={0.6} />
                     <directionalLight position={[5, 5, 5]} />
-                    <AutoFitModel url={gltfUrl} />
+                    <AutoFitModel glbUrl={gltfUrl} />
                     <OrbitControls />
                   </Canvas>
-                </div>
-          
-              </div>
+            </div>
+          </div>
         ) : (
           <p className="text-red-500">Invalid or missing QR code</p>
         )}
