@@ -27,7 +27,7 @@ function App() {
       <Routes>
 
         {/* 🌍 Public */}
-        <Route path="/" element={<UserModelPage />} />
+        <Route path="/user" element={<UserModelPage />} />
 
         {/* 👑 Admin Auth */}
         <Route path="/admin/login" element={<AdminLogin />} />
