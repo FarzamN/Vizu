@@ -16,30 +16,50 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { MoreVertical, Eye, Pencil, Trash, CreditCard } from "lucide-react";
+import { useEffect, useState } from "react";
+import { deleteRestaurantAPI, getAllRestaurantAPI } from "@/apis/auth.api";
+import { Label } from "@/components/ui/label";
+import type { DeleteRestaurantProps, RestaurantArrayProps } from "@/lib/type";
+import { CreateRestaurant ,DeleteDialog} from "@/components/dialougs";
 
 const Restaurants = () => {
-  // TEMP DATA (replace with API later)
-  const restaurants = [
-    {
-      _id: "1",
-      name: "MacDonals",
-      phone: "031234455678",
-      status: "active",
-    },
-  ];
+  const [loading, setLoading] = useState<boolean>(false);
+  const [restaurants, setRestaurants] = useState<RestaurantArrayProps>([]);
+
+  const [openAddRest, setOpenAddRest] = useState<boolean>(false);
+
+  const [deleteRestaurant, setDeleteRestaurant] = useState<DeleteRestaurantProps>({
+    loading: false,
+    visible: false,
+    _id: "",
+  });
+
+  useEffect(() => {
+    getAllRestaurantAPI(setRestaurants, setLoading);
+  }, []);
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-6">Restaurants</h1>
-
+    <div className="p-6 ">
+      <div className="flex row-auto justify-between">
+        <Label className="text-2xl font-semibold mb-6">
+          {loading ? "Loading" : "Restaurants"}
+        </Label>
+        <Button onClick={() => setOpenAddRest(true)} variant={"default"}>
+          + Restaurant
+        </Button>
+      </div>
       <div className="rounded-lg border bg-background">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Phone</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              {["Name", "Phone", "Status", "Actions"].map((e) => (
+                <TableHead
+                  className={`text-${e === "Actions" ? "right" : "left"}`}
+                  key={e}
+                >
+                  {e}
+                </TableHead>
+              ))}
             </TableRow>
           </TableHeader>
 
@@ -50,7 +70,7 @@ const Restaurants = () => {
                 <TableCell>{restaurant.phone}</TableCell>
                 <TableCell>
                   <span className="text-green-600 font-medium">
-                    {restaurant.status}
+                    {restaurant.subscriptionStatus}
                   </span>
                 </TableCell>
 
@@ -64,25 +84,34 @@ const Restaurants = () => {
                     </DropdownMenuTrigger>
 
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem>
-                        <Eye className="mr-2 h-4 w-4" />
-                        View
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem>
-                        <Pencil className="mr-2 h-4 w-4" />
-                        Edit
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem>
-                        <CreditCard className="mr-2 h-4 w-4" />
-                        Payment
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem className="text-red-600">
-                        <Trash className="mr-2 h-4 w-4" />
-                        Delete
-                      </DropdownMenuItem>
+                      {[
+                        { title: "View", icon: Eye },
+                        { title: "Edit", icon: Pencil },
+                        { title: "Paymeny", icon: CreditCard },
+                        { title: "Delete", icon: Trash },
+                      ].map((content) => {
+                        const isDelete = content.title === "Delete";
+                        return (
+                          <DropdownMenuItem
+                            onClick={() => {
+                              if (isDelete) {
+                                setDeleteRestaurant({ visible: true,
+                                  _id: restaurant._id,
+                                  loading:false
+                                 });
+                              }
+                            }}
+                            key={content.title}
+                            className={`${isDelete && "text-red-600"}`}
+                          >
+                            <content.icon
+                              color={`${isDelete ? "#E8000B" : "black"}`}
+                              className="mr-2 h-4 w-4"
+                            />
+                            {content.title}
+                          </DropdownMenuItem>
+                        );
+                      })}
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
@@ -91,6 +120,31 @@ const Restaurants = () => {
           </TableBody>
         </Table>
       </div>
+      <CreateRestaurant
+        open={openAddRest}
+        onClose={() => setOpenAddRest(false)}
+      />
+      <DeleteDialog
+        open={deleteRestaurant.visible}
+        actionText="Delete"
+        description="This action can not be undone"
+        isLoading={deleteRestaurant.loading}
+        title="Delete Restaurant"
+        onClose={() =>
+          setDeleteRestaurant({ _id: "", loading: false, visible: false })
+        }
+        onAction={() =>
+          deleteRestaurantAPI(
+            deleteRestaurant._id,
+            () =>
+              setDeleteRestaurant({
+                _id: "",
+                loading: false,
+                visible: false,
+              }),
+          )
+        }
+      />
     </div>
   );
 };

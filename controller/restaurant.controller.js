@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import { compare } from "bcryptjs";
+import { hash, compare } from "bcryptjs";
 import User from "../model/restaurant.model.js";
 
 export const createRestaurant = asyncHandler(async (req, res) => {
@@ -26,6 +26,7 @@ export const createRestaurant = asyncHandler(async (req, res) => {
   });
 
   res.status(201).json({
+    success: true,
     message: "Restaurant created",
     restaurantId: restaurant._id,
   });
@@ -65,5 +66,14 @@ export const getRestaurantById = asyncHandler(async (req, res) => {
   if (!restaurant) {
     return res.status(400).json({ error: "Restaurant not found" });
   }
-  res.status(200).json({ success: true, data: restaurants });
+  res.status(200).json({ success: true, data: restaurant });
+});
+
+export const deleteRestaurant = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const restaurant = await User.findByIdAndDelete(id);
+  if (!restaurant) {
+    return res.status(400).json({ error: "Restaurant not found" });
+  }
+  res.status(200).json({ success: true, data: restaurant });
 });

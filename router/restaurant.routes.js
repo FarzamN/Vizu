@@ -5,20 +5,26 @@ import {
   getAllRestaurant,
   loginRestaurant,
   getRestaurantById,
+  deleteRestaurant,
 } from "../controller/restaurant.controller.js";
 
-const adminRouter = Router();
+const restRouter = Router();
 
-adminRouter.post("/create-restaurant", createRestaurant);
-adminRouter.post("/login-restaurant", loginRestaurant);
-adminRouter.get(
+restRouter.post("/create-restaurant", createRestaurant);
+restRouter.post("/login-restaurant", loginRestaurant);
+restRouter.get(
   "/get-all-restaurant",
   // authGuard(["ADMIN"]),
   getAllRestaurant
 );
-adminRouter.get(
+restRouter.get(
   "/get-restaurant/:id",
   // authGuard(["ADMIN"]),
   getRestaurantById
 );
-export default adminRouter;
+restRouter.delete(
+  "/delete-restaurant/:id",
+  // authGuard(["ADMIN"]),
+  deleteRestaurant
+);
+export default restRouter;

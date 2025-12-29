@@ -3,7 +3,11 @@ import { Schema, model } from "mongoose";
 const modelSchema = new Schema({
   title: String,
   description: String,
-  model: String,
+  models: {
+    glb: String,
+    usdz: String,
+    png: String,
+  },
 });
 
-export default model(modelSchema, "model");
+export default model("Model3D", modelSchema);
