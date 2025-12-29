@@ -10,8 +10,7 @@ const app = express();
 connectDB();
 
 // Fix 1: Add credentials: true and remove trailing slash
-// const allowedOrigin = "http://localhost:5173";
-const allowedOrigin = "*";
+const allowedOrigin = "http://localhost:5173";
 
 app.use(
   cors({
@@ -19,6 +18,15 @@ app.use(
     credentials: true, // IMPORTANT: Add this
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Add OPTIONS for preflight
     allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+app.use(
+  "/models",
+  express.static("models", {
+    setHeaders(res) {
+      res.set("Access-Control-Allow-Origin", "*");
+    },
   })
 );
 
