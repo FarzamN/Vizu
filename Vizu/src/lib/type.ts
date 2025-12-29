@@ -44,3 +44,7 @@ export type DeleteRestaurantProps = {
   visible: boolean,
   _id: string
 }
+
+export type ViewRestaurantProps = {
+  open: boolean,onClose:() =>void,id: string
+}

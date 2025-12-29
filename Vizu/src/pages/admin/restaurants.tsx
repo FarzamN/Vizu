@@ -20,19 +20,25 @@ import { useEffect, useState } from "react";
 import { deleteRestaurantAPI, getAllRestaurantAPI } from "@/apis/auth.api";
 import { Label } from "@/components/ui/label";
 import type { DeleteRestaurantProps, RestaurantArrayProps } from "@/lib/type";
-import { CreateRestaurant ,DeleteDialog} from "@/components/dialougs";
+import {
+  CreateRestaurant,
+  DeleteDialog,
+  ViewRestaurant,
+} from "@/components/dialougs";
 
 const Restaurants = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [restaurants, setRestaurants] = useState<RestaurantArrayProps>([]);
 
   const [openAddRest, setOpenAddRest] = useState<boolean>(false);
+  const [viewRest, setViewRest] = useState({ visible: false, _id: "" });
 
-  const [deleteRestaurant, setDeleteRestaurant] = useState<DeleteRestaurantProps>({
-    loading: false,
-    visible: false,
-    _id: "",
-  });
+  const [deleteRestaurant, setDeleteRestaurant] =
+    useState<DeleteRestaurantProps>({
+      loading: false,
+      visible: false,
+      _id: "",
+    });
 
   useEffect(() => {
     getAllRestaurantAPI(setRestaurants, setLoading);
@@ -95,10 +101,13 @@ const Restaurants = () => {
                           <DropdownMenuItem
                             onClick={() => {
                               if (isDelete) {
-                                setDeleteRestaurant({ visible: true,
+                                setDeleteRestaurant({
+                                  visible: true,
                                   _id: restaurant._id,
-                                  loading:false
-                                 });
+                                  loading: false,
+                                });
+                              }else if (content.title === "View") {
+                                setViewRest({visible:true, _id: restaurant._id,})
                               }
                             }}
                             key={content.title}
@@ -124,6 +133,12 @@ const Restaurants = () => {
         open={openAddRest}
         onClose={() => setOpenAddRest(false)}
       />
+
+      <ViewRestaurant
+        id={viewRest._id}
+        open={viewRest.visible}
+        onClose={() => setViewRest({ visible: false, _id: "" })}
+      />
       <DeleteDialog
         open={deleteRestaurant.visible}
         actionText="Delete"
@@ -134,14 +149,12 @@ const Restaurants = () => {
           setDeleteRestaurant({ _id: "", loading: false, visible: false })
         }
         onAction={() =>
-          deleteRestaurantAPI(
-            deleteRestaurant._id,
-            () =>
-              setDeleteRestaurant({
-                _id: "",
-                loading: false,
-                visible: false,
-              }),
+          deleteRestaurantAPI(deleteRestaurant._id, () =>
+            setDeleteRestaurant({
+              _id: "",
+              loading: false,
+              visible: false,
+            })
           )
         }
       />

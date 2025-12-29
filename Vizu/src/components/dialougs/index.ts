@@ -1,4 +1,4 @@
 import {CreateRestaurant} from "./createRestaurant"
 import {DeleteDialog} from "./deleteDialog"
-
-export {CreateRestaurant,DeleteDialog}
+import ViewRestaurant from "./viewRestaurant"
+export {CreateRestaurant,DeleteDialog,ViewRestaurant}

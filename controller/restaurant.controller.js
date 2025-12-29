@@ -57,7 +57,7 @@ export const loginRestaurant = asyncHandler(async (req, res) => {
 
 export const getAllRestaurant = asyncHandler(async (req, res) => {
   const restaurants = await User.find({ role: "RESTAURANT" });
-  res.status(200).json({ success: true, data: restaurants });
+  res.status(200).json({ success: true, data: restaurants.reverse() });
 });
 
 export const getRestaurantById = asyncHandler(async (req, res) => {
@@ -75,5 +75,5 @@ export const deleteRestaurant = asyncHandler(async (req, res) => {
   if (!restaurant) {
     return res.status(400).json({ error: "Restaurant not found" });
   }
-  res.status(200).json({ success: true, data: restaurant });
+  res.status(200).json({ success: true, message: "Restaurant deleted" });
 });

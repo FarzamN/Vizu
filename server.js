@@ -21,15 +21,6 @@ app.use(
   })
 );
 
-app.use(
-  "/models",
-  express.static("models", {
-    setHeaders(res) {
-      res.set("Access-Control-Allow-Origin", "*");
-    },
-  })
-);
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

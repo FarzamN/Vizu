@@ -6,8 +6,7 @@ import type { UrlProps } from "@/lib/type";
 
 
 
-export default function AutoFitModel({ glbUrl,usdzUrl }: UrlProps) {
-  console.log(usdzUrl)
+export default function AutoFitModel({ glbUrl }: UrlProps) {
   const { scene } = useGLTF(glbUrl);
   const group = useRef<Group>(null!);
   const { camera } = useThree();

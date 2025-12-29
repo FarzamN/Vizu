@@ -4,7 +4,11 @@ import type {
   //  RegisterPayload
 } from "@/lib/interface";
 import type { Dispatch, SetStateAction } from "react";
-import type { DeleteRestaurantProps, RestaurantArrayProps, RestaurantFields } from "@/lib/type";
+import type {
+  DeleteRestaurantProps,
+  RestaurantArrayProps,
+  RestaurantFields,
+} from "@/lib/type";
 import type { NavigateFunction } from "react-router-dom";
 
 // export const adminRegisterAPI = async (payload: RegisterPayload) => {
@@ -112,9 +116,9 @@ export const getRestaurantByIdAPI = async (
 ) => {
   setLoading(true);
   try {
-    const { data } = await api.get(`/admin/get-restaurant/${_id}`);
+    const { data } = await api.get(`/rest/get-restaurant/${_id}`);
     setLoading(false);
-    setData(data.data);
+    if (data.success) setData(data.data);
   } catch (error: any) {
     setLoading(false);
     throw error?.response?.data || { message: "Admin login failed" };
@@ -123,29 +127,29 @@ export const getRestaurantByIdAPI = async (
 
 export const deleteRestaurantAPI = async (
   _id: string,
-  setDeleteRestaurant: Dispatch<SetStateAction<DeleteRestaurantProps>>,
+  setDeleteRestaurant: Dispatch<SetStateAction<DeleteRestaurantProps>>
 ) => {
   setDeleteRestaurant((prev) => ({
     ...prev,
-    loading: true
+    loading: true,
   }));
   try {
-    const { data } = await api.get(`/rest/delete-restaurant/${_id}`);
-   setDeleteRestaurant((prev) => ({
-    ...prev,
-    loading: false
-  }));
+    const { data } = await api.delete(`/rest/delete-restaurant/${_id}`);
+    setDeleteRestaurant((prev) => ({
+      ...prev,
+      loading: false,
+    }));
     if (data.success) {
       setDeleteRestaurant((prev) => ({
         ...prev,
-        visible: false
+        visible: false,
       }));
     }
   } catch (error: any) {
-   setDeleteRestaurant((prev) => ({
-    ...prev,
-    loading: false
-  }));
+    setDeleteRestaurant((prev) => ({
+      ...prev,
+      loading: false,
+    }));
     throw error?.response?.data || { message: "Unable to Delete" };
   }
 };
