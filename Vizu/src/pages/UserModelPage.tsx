@@ -48,7 +48,7 @@ const UserModelPage = () => {
               <Canvas camera={{ fov: 45 }}>
                 <ambientLight intensity={0.6} />
                 <directionalLight position={[5, 5, 5]} />
-                <AutoFitModel glbUrl={gltfUrl} />
+                <AutoFitModel glbUrl={gltfUrl} usdzUrl="this is null for now"/>
                 <OrbitControls />
               </Canvas>
             </div>
